@@ -1,11 +1,30 @@
 from fastapi import APIRouter
+from app.models.user import User #Import le modele User
 
 router = APIRouter()
 
-@router.get("/")
-def read_users():
-    return {"users": ["user1", "user2"]}
+@router.get("/user")
+async def read_users():
+    return {"users" : [User(id=1, username="user1", email="user1@example.com"),
+             User(id=2, username="user2", email="user2@example.com")]}
+ 
 
-@router.get("/{user_id}")
-def read_user(user_id: int):
-    return {"user_id": user_id, "name": f"user{user_id}"}
+@router.get("/")
+async def root():
+    return {"message": "hello world"}
+
+@router.post("/")
+def post(user_id: int):
+    return {"message": "hello from the post route"}
+
+@router.put("/")
+async def put():
+    return {"message": "hello from the put route"}
+
+@router.get("/items")
+async def list_items():
+    return {"message":"List items route"}
+
+@router.get("/items/{item_id}")
+async def get_item(item_id:int):
+    return {"item":item_id}
